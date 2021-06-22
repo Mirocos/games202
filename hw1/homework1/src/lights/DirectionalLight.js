@@ -21,15 +21,20 @@ class DirectionalLight {
         let viewMatrix = mat4.create();
         let projectionMatrix = mat4.create();
 
-        // Model transform
 
+        // Model transform
+        mat4.fromTranslation(modelMatrix, translate);
+        mat4.fromScaling(modelMatrix, scale);
         // View transform
-    
+        mat4.lookAt(viewMatrix,  this.lightPos, this.focalPoint, this.lightUp)
         // Projection transform
+    
+        mat4.ortho(projectionMatrix, -300, 300, -300, 300, 10, 600);
 
         mat4.multiply(lightMVP, projectionMatrix, viewMatrix);
         mat4.multiply(lightMVP, lightMVP, modelMatrix);
 
+        // console.log(lightMVP)
         return lightMVP;
     }
 }
